@@ -29,7 +29,7 @@
 | Янковский Дмитрий   | [PasswdHunter](https://github.com/PasswdHunter)  |
 
 ## Ссылки
-- [GitHub репозиторий](https://github.com/your-repo-link)
+- [GitHub репозиторий](https://github.com/passwdHunter/JavaProject)
 
 ## Запуск проекта
 1. Склонируйте репозиторий:
