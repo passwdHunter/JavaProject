@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: cinema
+    version: 1.0.0
+  datasource:
+    username: myuser
+    password: mypassword
+    url: jdbc:postgresql://localhost:5432/mydatabase
+  flyway:
+    default-schema: public
+    user: {spring.datasource.username}
+    password: {spring.datasource.password}
+    url: {spring.datasource.url}
