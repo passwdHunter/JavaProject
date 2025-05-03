@@ -192,4 +192,3 @@ ID билета.
 1. Склонируйте репозиторий:
    ```bash
    git clone https://github.com/passwdHunter/JavaProject
-   
