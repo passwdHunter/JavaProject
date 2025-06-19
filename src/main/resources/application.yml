@@ -3,7 +3,7 @@ spring:
     name: cinema
     version: 1.0.0
   datasource:
-    username: myuser
+    username: newuser
     password: mypassword
     url: jdbc:postgresql://localhost:5432/cinema_db
   flyway:
@@ -12,3 +12,10 @@ spring:
     password: ${spring.datasource.password}
     schemas: public
     locations: classpath:db/migration
+    baseline-on-migrate: true
+    out-of-order: true
+    clean-on-validation-error: false
+logging:
+  level:
+    org.flywaydb: DEBUG
+    org.springframework.jdbc: DEBUG

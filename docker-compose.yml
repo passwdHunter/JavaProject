@@ -5,24 +5,17 @@ services:
     container_name: cinema_postgres
     environment:
       POSTGRES_DB: cinema_db
-      POSTGRES_USER: myuser
+      POSTGRES_USER: newuser
       POSTGRES_PASSWORD: mypassword
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    stop_grace_period: 30s
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U myuser"]
+      test: ["CMD-SHELL", "pg_isready -U newuser -d cinema_db"]
       interval: 5s
       timeout: 5s
       retries: 5
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: cinema_pgadmin
@@ -34,12 +27,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-
   app:
     image: my-java-app:latest
     container_name: cinema_app
@@ -48,20 +35,14 @@ services:
       dockerfile: Dockerfile
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://cinema_postgres:5432/cinema_db
-      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_USERNAME: newuser
       SPRING_DATASOURCE_PASSWORD: mypassword
-      SPRING_FLYWAY_USER: myuser
+      SPRING_FLYWAY_USER: newuser
       SPRING_FLYWAY_PASSWORD: mypassword
     ports:
       - "8080:8080"
     depends_on:
       postgres:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 1G
-
 volumes:
   pgdata:
