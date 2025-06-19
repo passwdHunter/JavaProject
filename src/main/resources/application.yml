@@ -5,9 +5,10 @@ spring:
   datasource:
     username: myuser
     password: mypassword
-    url: jdbc:postgresql://localhost:5432/mydatabase
+    url: jdbc:postgresql://localhost:5432/cinema_db
   flyway:
     default-schema: public
-    user: {spring.datasource.username}
-    password: {spring.datasource.password}
-    url: {spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    schemas: public
+    locations: classpath:db/migration
