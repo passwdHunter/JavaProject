@@ -15,7 +15,18 @@ spring:
     baseline-on-migrate: true
     out-of-order: true
     clean-on-validation-error: false
-logging:
-  level:
-    org.flywaydb: DEBUG
-    org.springframework.jdbc: DEBUG
+  logging:
+    level:
+      org.flywaydb: DEBUG
+      org.springframework.jdbc: DEBUG
+server:
+  port: 6060
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  version: 1.0.0
+  packages-to-scan: com.psu.cinema.controller
+  paths-to-match: /api/**

@@ -1,20 +1,42 @@
 package com.psu.cinema.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Setter
-@Getter
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Entity
+@Table(name = "payment", schema = "public")
 public class Payment {
-    private Long id;
-    private User user; // Кто оплатил
-    private Ticket ticket; // За какой билет
-    private double amount; // Сумма
-    private String paymentMethod; // Способ оплаты
-    private String status; // Успешный, отменённый
-    private String paymentDateTime; // Дата и время платежа
 
-    // Конструкторы, геттеры и сеттеры
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "ticket_id", nullable = false)
+    private Ticket ticket;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @NotNull
+    @DecimalMin("0.00")
+    @Column(name = "amount", nullable = false)
+    private BigDecimal amount;
+
+    @NotBlank
+    @Pattern(regexp = "PENDING|COMPLETED|FAILED|REFUNDED")
+    @Column(name = "status", nullable = false)
+    private String status;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

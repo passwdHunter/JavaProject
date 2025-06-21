@@ -1,24 +1,43 @@
 package com.psu.cinema.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-import java.util.List;
-@Setter
-@Getter
+import java.time.LocalDateTime;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Entity
+@Table(name = "user", schema = "public")
 public class User {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private String phoneNumber;
-    private String role; // Администратор или пользователь
-    private List<Session> visitHistory; // История посещений
-    private List<Film> favoriteFilms; // Избранные фильмы
-    private List<Notification> notifications; // Уведомления
 
-    // Конструкторы, геттеры и сеттеры
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank
+    @Size(max = 50)
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @NotBlank
+    @Size(max = 100)
+    @Email
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @NotBlank
+    @Size(max = 255)
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
+    @NotBlank
+    @Pattern(regexp = "USER|ADMIN")
+    @Column(name = "role", nullable = false)
+    private String role;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

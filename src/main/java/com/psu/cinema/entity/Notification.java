@@ -1,20 +1,38 @@
 package com.psu.cinema.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
+import java.time.LocalDateTime;
+
+@Data
 @NoArgsConstructor
-@ToString
-
+@AllArgsConstructor
+@Entity
+@Table(name = "notification", schema = "public")
 public class Notification {
-    private Long id;
-    private User user; // Для кого уведомление
-    private String message; // Текст уведомления
-    private String type; // Тип (скидка, сеанс, изменение расписания)
-    private String sendTime; // Время отправки
-    private boolean isRead; // Прочитано или нет
 
-    // Конструкторы, геттеры и сеттеры
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @NotBlank
+    @Column(name = "message", nullable = false)
+    private String message;
+
+    @NotBlank
+    @Pattern(regexp = "TICKET_PURCHASE|SESSION_REMINDER|PROMOTION")
+    @Column(name = "type", nullable = false)
+    private String type;
+
+    @Column(name = "is_read", nullable = false)
+    private Boolean isRead = false;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

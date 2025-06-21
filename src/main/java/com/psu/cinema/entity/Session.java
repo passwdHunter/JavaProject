@@ -1,21 +1,37 @@
 package com.psu.cinema.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-import java.util.List;
-@Setter
-@Getter
+import java.time.LocalDateTime;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Entity
+@Table(name = "session", schema = "public")
 public class Session {
-    private Long id;
-    private Film film; // Связь с фильмом
-    private Hall hall; // Связь с залом
-    private String dateTime; // Дата и время сеанса
-    private String format; // 2D, 3D, IMAX
-    private double price;
-    private List<String> availableSeats; // Доступные места
 
-    // Конструкторы, геттеры и сеттеры
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "film_id", nullable = false)
+    private Film film;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "hall_id", nullable = false)
+    private Hall hall;
+
+    @NotNull
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
+
+    @NotNull
+    @Column(name = "end_time", nullable = false)
+    private LocalDateTime endTime;
 }

@@ -1,22 +1,32 @@
 package com.psu.cinema.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-import java.util.List;
-
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Entity
+@Table(name = "cinema", schema = "public")
 public class Cinema {
-    private Long id;
-    private String name;
-    private String address;
-    private int hallCount;
-    @ToString.Exclude
-    private List<Hall> halls; // Список залов
-    private String contactInfo;
 
-    // Конструкторы, геттеры и сеттеры
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank
+    @Size(max = 100)
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @NotBlank
+    @Size(max = 255)
+    @Column(name = "address", nullable = false)
+    private String address;
+
+    @NotBlank
+    @Size(max = 50)
+    @Column(name = "city", nullable = false)
+    private String city;
 }
